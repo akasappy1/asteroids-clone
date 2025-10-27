@@ -1,4 +1,5 @@
 import pygame
+import sys
 from player import Player
 from asteroid import Asteroid
 from asteroid_field import AsteroidField
@@ -27,9 +28,14 @@ def main():
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                return 
+                return False
             
         updatable.update(dt)
+        for object in asteroids:
+            if object.collide(player):
+                print("Game over!")
+                sys.exit()
+
 
         screen.fill("black")
 
@@ -40,6 +46,8 @@ def main():
 
 
         dt = game_clock.tick(60) / 1000
+
+    pygame.quit()
        
 
 if __name__ == "__main__":
